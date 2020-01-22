@@ -2,7 +2,6 @@
 layout: page
 title: About
 permalink: /about/
-lang: en
 ---
 
 My name's Rodrigo Bozzolo. I'm a software dev from Chile, currently based in Seattle.

@@ -14,8 +14,6 @@ gem "minima", "~> 2.5"
 group :jekyll_plugins do
   gem "github-pages", "~> 203"
   gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-sitemap"
-  gem "jekyll-polyglot"
 end
 
 gem "rake", "~> 12"
