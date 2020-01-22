@@ -30,18 +30,10 @@ instagram_username: thebozzcl
 linkedin_username: rodrigo-bozzolo
 show_excerpts: true
 
-# i18n config
-languages: ["en", "es"]
-default_lang: "en"
-exclude_from_localization: ["javascript", "images", "css"]
-parallel_localization: true
-
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-polyglot
 
 # Exclude from processing.
 # The following items will not be processed, by default.
