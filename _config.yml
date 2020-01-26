@@ -24,16 +24,26 @@ description: >- # this means to ignore newlines until "baseurl:"
   Just some place for me to put all my random thoughts
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://bozz.cl/" # the base hostname & protocol for your site, e.g. http://example.com
-github_username: thebozzcl
-facebook_username: thebozzcl
-instagram_username: thebozzcl
-linkedin_username: rodrigo-bozzolo
 show_excerpts: true
+
+# Includes an icon in the footer for each username you enter
+footer-links:
+  email: contact@bozz.cl
+  facebook: thebozzcl
+  github: thebozzcl
+  instagram: thebozzcl
+  linkedin: rodrigo-bozzolo
 
 # Build settings
 theme: minima
-plugins:
+gems:
   - jekyll-feed
+  - jekyll-polyglot
+
+languages: ["en", "es_CL"]
+default_lang: "en"
+exclude_from_localization: ["javascript", "images", "css"]
+parallel_localization: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
