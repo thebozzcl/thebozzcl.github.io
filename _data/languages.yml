@@ -1,6 +1,10 @@
 en:
-  name: English
+  name:
+    en: English
+    es_CL: Inglés
   icon: 🇺🇸
 es_CL:
-  name: Spanish
+  name:
+    en: Spanish
+    es_CL: Español
   icon: 🇨🇱
