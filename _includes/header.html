@@ -17,6 +17,17 @@
         </label>
 
         <div class="trigger">
+          {% for lang_option in site.languages %}
+            {% assign lang_icon = site.data.languages[lang_option].icon %}
+            {% assign lang_name = site.data.languages[lang_option].name[site.active_lang] %}
+            {% if site.default_lang == lang_option %}
+              <a class="page-link" href=" {{ page.permalink }}">
+            {% else %}
+              <a class="page-link" href="{{ site.url }}/{{ lang_option }}{{ page.permalink }}">
+            {% endif %}
+              {{ lang_icon }} {{ lang_name }} 
+            </a>
+          {% endfor %}
           {%- for path in page_paths -%}
             {%- assign my_page = site.pages | where: "path", path | first -%}
             {%- if my_page.title -%}
@@ -26,22 +37,5 @@
         </div>
       </nav>
     {%- endif -%}
-  </div>
-  <div class="wrapper">
-    <nav class="site-nav">
-      <div class="trigger">
-        {% for lang_option in site.languages %}
-          {% assign lang_icon = site.data.languages[lang_option].icon %}
-          {% assign lang_name = site.data.languages[lang_option].name[site.active_lang] %}
-          {% if site.default_lang == lang_option %}
-            <a class="page-link" href=" {{ page.permalink }}">
-          {% else %}
-            <a class="page-link" href="{{ site.url }}/{{ lang_option }}{{ page.permalink }}">
-          {% endif %}
-            {{ lang_icon }} {{ lang_name }} 
-          </a>
-        {% endfor %}
-      </div>
-    </nav>
   </div>
 </header>
