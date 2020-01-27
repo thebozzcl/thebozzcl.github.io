@@ -28,8 +28,6 @@ El siguiente paso es actualizar algunas partes del tema que estamos usando. Para
 
 Vas a querer mirar el contenido de los directorios `_layouts` y `_includes`. En mi caso, necesitaba los includes `footer.html` y `header.html`, y el layout `home.html`.
 
-Next, choose the lines of text you want to translate, and put them in a `_data/translated_strings.yml` file. Here's a sample of mine:
-
 Luego tienes que escoger el texto que quieres traducir, y ponlas en un nuevo archivo llamado `_data/translated_strings.yml`. Acá hay un ejemplo del mío:
 
 {% highlight yaml %}
@@ -69,8 +67,6 @@ El paso final es darle a los usuarios una forma de escoger el idioma. Para eso, 
   </a>
 {% endfor %}
 {% endraw %}{% endhighlight %}
-
-There's two interesting things to note here. First, see that dangling space in the anchor href? That's on purpose. It tells Polyglot to use the default language link. Second, there's the `site.data.languages[lang_option]` snippet. That reads the contents of `./_data/languages.yml`:
 
 Hay dos cosas interesantes que notar. Primero, ¿ves ese espacio al principio del href en el anchor? Eso es a propósito. Le dice a Polyglot que use el link del idioma por defecto. Segundo, tenemos la parte que dice `site.data.languages[lang_option]`. Eso lee los contenidos de `./_data/languages.yml`:
 
