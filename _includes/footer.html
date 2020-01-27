@@ -18,6 +18,7 @@
             {%- if site.email -%}
             <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
             {%- endif -%}
+            <p class="rss-subscribe">{{ site.data.translated_strings.subscribe[site.active_lang] }} <a href="{{ "/feed.xml" | relative_url }}">{{ site.data.translated_strings.via_rss[site.active_lang] }}</a></p>
         </ul>
       </div>
 
