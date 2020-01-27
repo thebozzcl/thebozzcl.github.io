@@ -85,4 +85,4 @@ es_CL:
 
 Sí, usé emojis para los íconos de los países. ¿Algún problema? También le puse traducciones individuales al nombre de cada idioma. Es innecesario, pero me sirvió de práctica.
 
-¡Y eso es por ahora! Estoy un poco emocionado por este pequeño proyecto, ha sido entretenido. Hay algunas otras funcionalidades que quiero implementar, pero voy a atacarlas, de a poco.
+¡Y eso es por ahora! Estoy un poco emocionado por este pequeño proyecto, ha sido entretenido. Hay algunas otras funcionalidades que quiero implementar, pero voy a atacarlas de a poco.
