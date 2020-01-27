@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Acerca De Mí
+title: Acerca de mí
 permalink: /about/
 lang: es_CL
 ---
 
-En Shileno
+¡Hola! Me llamo Rodrigo Bozzolo. Soy un ingeniero industrial chileno. Estoy viviendo en Seattle, trabanjando como un desarrollador de software.
 
-My name's Rodrigo Bozzolo. I'm a software dev from Chile, currently based in Seattle.
+Tengo muchos intereses fuera del software. Música, tecnología, matemática, ciencia, ¡y muchos otros temas ñoños! Me gusta escribir sobre todo eso, además de mis reflecciones sobre la vida.
 
-I have a pretty broad set of interests, ranging from technology to music, and I wanted a place where I could talk more about them. Besides, it's interesting to veer off the beaten path and try my hand at writing a website!
+Como además he tenido ganas de aprender más desarrollo de páginas web, ¡decidí intentar construir mi propia página desde cero!

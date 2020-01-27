@@ -1,10 +1,12 @@
 ---
 layout: page
-title: About Me
+title: About me
 permalink: /about/
 lang: en
 ---
 
-My name's Rodrigo Bozzolo. I'm a software dev from Chile, currently based in Seattle.
+Hi all! My name's Rodrigo Bozzolo. I'm an industrial engineer from Chile. Right now I'm living in Seattle, working as a software developer.
 
-I have a pretty broad set of interests, ranging from technology to music, and I wanted a place where I could talk more about them. Besides, it's interesting to veer off the beaten path and try my hand at writing a website!
+I have a pretty broad range of interests, outside software development. Music, technology, math, and all sorts of nerdy stuff! I like writing about all of that and the stuff I do, along with reflections on my life and current situations.
+
+I've been wanting to learn more front-end development, so I decided to try building my own site from scratch!
