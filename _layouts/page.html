@@ -11,12 +11,6 @@ layout: default
     {{ content }}
   </div>
 
-  <script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
-    <div id="fastcomments-widget"></div>
-    <script>
-      window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
-          tenantId: 'IeX0qIpHi'
-      });
-  </script>
+  {%- include comments.html -%}
 
 </article>
