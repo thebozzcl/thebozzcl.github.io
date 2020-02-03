@@ -3,9 +3,10 @@
 <script>
   window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
     tenantId: "IeX0qIpHi",
-    urlId: "{{ site.url }}/{{ page.permalink | post.permalink }}",
+    urlId: "{{ site.url }}{{ page.permalink | post.permalink }}",
     commentCountFormat: "[count] comments on {{ page.title | post.title }}",
     headerHTML: "<h1>{{ site.data.translated_strings.leave_a_comment[site.active_lang] }}</h1>",
     absoluteDates: true,
+    allowAnon: true,
   });
 </script>
