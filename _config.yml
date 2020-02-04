@@ -36,6 +36,7 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-polyglot
+  - jekyll-sitemap
 
 languages: ["en", "es_CL"]
 default_lang: "en"
