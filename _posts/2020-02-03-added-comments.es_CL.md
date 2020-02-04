@@ -55,6 +55,4 @@ Aun si es un poco limitado ahora mismo, FastComments calza bien con mi filosofí
 
 ## Segundo finalista: ¿puedes tener comentarios con sólo un sitio estático, y nada más?
 
-You can! If we kept everything that way, the only way to add comments is by changing the code of my site. This is exactly what [Staticman](https://staticman.net/) does: it pushes a change to the code base for each comment. It's such a delightfully odd solution, and it works pretty well! There's a catch, though: it takes a while for comments to show up because the site needs to be rebuilt each time. I opted to keep the site responsive and do it some other way.
-
 ¡Resulta que sí! Si mantuviéramos el sitio tal como está, la única forma de agregar comentarios es cambiando el código del sitio. Esto es exactamente lo que hace [Staticman](https://staticman.net/): empuja un cambio al repositorio del código para cada comentario. ¡Es una solución tan bizarra, pero que funciona tan bien! Tien un problema, eso sí: como cada comentario necesita una reconstrucción del sitio para mostrarse, los comentarios toman mucho tiempo en publicarse. Decidí mantener el sitio más dinámico y optar por otra solución.
