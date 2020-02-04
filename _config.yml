@@ -42,6 +42,9 @@ default_lang: "en"
 exclude_from_localization: ["javascript", "images", "css"]
 parallel_localization: true
 
+fastcomments:
+  tenantId: "IeX0qIpHi"
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
