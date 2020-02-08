@@ -48,7 +48,7 @@ Los últimos dos atributos, `commentCountFormat` y `headerHTML`, te permiten cam
 ## Comentarios y wishlist
 
 FastComments es un servicio muy nuevo, así que todavía está en progreso. Hay algunas mejoras que me gustaría ver:
-* Mejor localización o remplazo de strings: hablé con el equipo de soporte, y quieren lanzar una mejora en las próximas semanas.
+* Mejor localización o remplazo de strings: ~~hablé con el equipo de soporte, y quieren lanzar una mejora en las próximas semanas.~~ **ACTUALIZACIÓN 08/02/2020**: el soporte de localización ya está listo, usando auto-detección o con el parámetro `locale`. Ahora mismo, soportan los valores `en_us`, `es_es` y `fr_fr`, así que tengo más que suficiente para mis planes.
 * Mejor documentación: me costó un poco hacer esto funcionar a mi manera porque la documentación del snippet no es muy buena. Tuve que buscar en el blog de FastComments hasta que encontré [una lista completa de argumentos](https://blog.fastcomments.com/(1-24-2020)-how-to-make-a-comment-system-like-hackaday.com.html). Preferiría documentación dedicada.
 
 Aun si es un poco limitado ahora mismo, FastComments calza bien con mi filosofía de diseño y es muy barato. No puedo confirmar si es el servicio más liviano o rápido, pero los resultados son suficientemente buenos para mí. Estoy contento por ahora, y espero con ganas lo que ofrezcan en el futuro.

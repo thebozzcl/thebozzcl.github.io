@@ -48,7 +48,7 @@ The last two fields, `commentCountFormat` and `headerHTML`, allow you to overrid
 ## Thoughts and feature wishlist
 
 FastComments is a very new service, so it's still a WIP. There's a bunch of improvements I'd like to see:
-* Better localization or string overrides: I talked to their support team, and they're planning to improve this in the next few weeks.
+* Better localization or string overrides: ~~I talked to their support team, and they're planning to improve this in the next few weeks.~~ **UPDATE 02/08/2020**: localization is now supported either by auto-detect or by passing the `locale` attribute to the widget. It supports `en_us`, `es_es` and `fr_fr`, which should do for my purposes!
 * Better documentation: I struggled to get things working my way a little bit because the documentation for the code snippet is lacking. I had to search through the FastComments blog to [figure out the available arguments](https://blog.fastcomments.com/(1-24-2020)-how-to-make-a-comment-system-like-hackaday.com.html). I'd prefer dedicated documentation.
 
 So while it's pretty bare-bones right now, FastComments matches my design philosophy well and it's very cheap. I can't confirm them being the lightest or the fastest, but it's more than good enough for what I wanted. I'm pretty happy so far, and I'm looking forward to what they offer in the future.
