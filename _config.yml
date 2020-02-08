@@ -37,6 +37,7 @@ plugins:
   - jekyll-feed
   - jekyll-polyglot
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 languages: ["en", "es_CL"]
 default_lang: "en"

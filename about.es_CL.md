@@ -3,6 +3,7 @@ layout: page
 title: Acerca de mí
 permalink: /about/
 lang: es_CL
+tags: [static, about]
 ---
 
 ¡Hola! Me llamo Rodrigo Bozzolo. Soy un ingeniero industrial chileno. Estoy viviendo en Seattle, trabajando como un desarrollador de software.

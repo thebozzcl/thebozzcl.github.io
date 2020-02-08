@@ -3,7 +3,7 @@ layout: post
 permalink: /posts/2020-02-03-added-comments.html
 title: "Now I have comments!"
 date: 2020-02-03 22:30:00 -0800
-categories: site comments fastcomments
+tags: [post, coding, blog]
 lang: en
 ---
 
