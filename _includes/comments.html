@@ -4,6 +4,6 @@
   window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
     tenantId: "{{ site.fastcomments.tenantId }}",
     urlId: "{{ site.url }}{{ page.permalink | post.permalink }}",
-    locale: "{{ site.data.translated_strings.fastcomments_locale[site.active_lang] }}",
+    locale: "{{ site.data.languages[site.active_lang].fastcomments_locale }}",
   });
 </script>

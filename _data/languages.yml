@@ -3,8 +3,10 @@ en:
     en: English
     es_CL: Inglés
   icon: 🇺🇸
+  fastcomments_locale: en_us
 es_CL:
   name:
     en: Spanish
     es_CL: Español
   icon: 🇨🇱
+  fastcomments_locale: es_es
