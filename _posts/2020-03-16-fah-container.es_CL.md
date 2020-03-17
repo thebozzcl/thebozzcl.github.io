@@ -7,7 +7,7 @@ tags: [post, coding, blog]
 lang: es_CL
 ---
 
-Es fácil sentirse impotente ante crisis globales como la que estamos viviendo hoy. Quedarse encerrado, esperando a que se termine... ¿de verdad no hay nada que podamos hacer? Pues no, hay algunas formas en que podemos ayudar. Un ejemplo es [Folding@Home](https://foldingathome.org/). F@H es una iniciativa que usa los recursos de tu computador para simular cómo funcionan las proteínas y otros químicos complejos. Ahora mismo, han publicado [órdenes de trabajo de alta prioridad para analizar el virus 2019-nCoV](ttps://foldingathome.org/2020/02/27/foldinghome-takes-up-the-fight-against-covid-19-2019-ncov/), con la esperanza de ayudar a encontrar anticuerpos compatibles.
+Es fácil sentirse impotente ante crisis globales como la que estamos viviendo hoy. Quedarse encerrado, esperando a que el coronavirus se termine... ¿de verdad no hay nada que podamos hacer? Pues no, hay algunas formas en que podemos ayudar. Un ejemplo es [Folding@Home](https://foldingathome.org/). F@H es una iniciativa que usa los recursos de tu computador para simular cómo funcionan las proteínas y otros químicos complejos. Ahora mismo, han publicado [órdenes de trabajo de alta prioridad para analizar el virus 2019-nCoV](ttps://foldingathome.org/2020/02/27/foldinghome-takes-up-the-fight-against-covid-19-2019-ncov/), con la esperanza de ayudar a encontrar anticuerpos compatibles.
 
 Si quieres ayudar, es tan fácil como [descargar y ejecutar el programa de F@H](https://foldingathome.org/start-folding/). Ahí es donde me quedé atascado: no pude instalar el programa en Ubuntu. Decidí tratar de resolverlo por mi cuenta.
 
@@ -15,7 +15,7 @@ Si quieres ayudar, es tan fácil como [descargar y ejecutar el programa de F@H](
 
 ## ¿Cuál es el problema?
 
-Estoy usando [Pop!\_OS 19.10](https://system76.com/pop), una distribución de Linux basada en Ubuntu. Cuando intenté instalar los paquetes de F@H, `apt` reclamó no podía resolver `python-gnome2` y otras dependencias relacionadas.
+Estoy usando [Pop!\_OS 19.10](https://system76.com/pop), una distribución de Linux basada en Ubuntu. Cuando intenté instalar los paquetes de F@H, `apt` reclamó que no podía resolver `python-gnome2` y otras dependencias relacionadas.
 
 ## Primer intento: forzar la instalación
 
