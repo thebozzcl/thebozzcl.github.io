@@ -62,8 +62,6 @@ docker run --gpus all \
 
 ## Ejecutando el contenedor en otras configuraciones
 
-I haven't done a lot of testing, other than in my own machine, so there's not a lot I can say. There's a few things that are pretty certain:
-
 No he hecho muchas pruebas, sólo en mi computador, así que no puedo comentar mucho. Hay un par de cosas de las que estoy seguro:
 * Este contenedor debería funcionar sin problemas en otros computadores con una GPU de nVidia, siempre y cuando las herramientas de nVidia estén instaladas.
 * Este contenedor también va a funcionar en computadores sin una tarjeta de video dedicada... pero es mucho más pesado que otros contenedores que funcionarían igual de bien.
