@@ -41,8 +41,6 @@ Estos fueron los pasos que seguí:
 3. Instalar las [herramientas para contenedores de nVidia](https://github.com/NVIDIA/nvidia-docker). Esto permite que tus contenedores accedan a la tarjeta de video, así que es vital. Puedes confirmar si funciona corriendo `docker run --gpus all nvidia/cuda:10.0-base nvidia-smi`. Si la información de sistema que el contenedor puede ver es correcta, todo está en orden.
 4. Finalmente, creé un fork del [repositorio de yurinnick](https://github.com/yurinnick/folding-at-home-docker/) y cambié la base del `Dockerfile` a `nvidia/opencl`. Este contenedor tiene todas las dependencias que F@H necesita para usar la tarjeta de video. He publicado mi resultado final a [este repositorio de Docker Hub](https://hub.docker.com/r/thebozzcl/folding-at-home).
 
-After doing the prep steps above and fixing the container image, I was able to run GPU workloads in the container using the following run command:
-
 Con estas preparaciones listas, y tras haber arreglado la imagen del contenedor, pude ejecutar órdenes de trabajo en la GPU usando el siguiente comando:
 
 ```
