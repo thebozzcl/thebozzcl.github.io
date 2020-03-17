@@ -3,7 +3,7 @@ layout: page
 title: Credits
 permalink: /credits/
 lang: en
-tags: [static, credits]
+tags: [credits]
 ---
 
 I think it's worthwhile to give a shout-out to the tools I'm using for this site. Most of this is open-source or free to use!

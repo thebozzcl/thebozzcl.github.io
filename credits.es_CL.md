@@ -3,7 +3,7 @@ layout: page
 title: Créditos
 permalink: /credits/
 lang: es_CL
-tags: [static, credits]
+tags: [credits]
 ---
 
 Creo que las herramientas que uso en mi página se merecen un poco de reconocimiento. ¡Casi todo esto es open-source o gratis!

@@ -3,7 +3,7 @@ layout: page
 title: About me
 permalink: /about/
 lang: en
-tags: [static, about]
+tags: [about]
 ---
 
 Hi all! My name's Rodrigo Bozzolo. I'm an industrial engineer from Chile. Right now I'm living in Seattle, working as a software developer.
