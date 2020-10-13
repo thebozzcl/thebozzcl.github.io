@@ -30,7 +30,7 @@ una costumbre que he tratado de mantener. Este año, esta reflexión será más 
 que nunca, así que le he puesto más esfuerzo que de costumbre. Encima de eso, hoy es
 Día de Acción de Gracias en Canadá... ¡así que no es tan fuera de lugar!
 
-<!-- more -->
+<!--more-->
 
 ## Gracias por ayudarme a mantener mi cordura
 

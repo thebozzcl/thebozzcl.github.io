@@ -29,7 +29,7 @@ Given the current circumstances, I think this year's reflection is going to be
 more important than ever. I'm putting extra time and thought into it. It's also
 Canadian Thanksgiving, so it's perfect timing, in a way!
 
-<!-- more -->
+<!--more-->
 
 ## Thanks for helping me not go crazy
 
