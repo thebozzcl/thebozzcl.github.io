@@ -9,7 +9,7 @@ lang: en
 
 I've been using [Pi-hole](https://pi-hole.net/) for several years. It's just a fantastic way to both improve your online experience and protect your privacy... but it has one problem: you can't bring it everywhere with you. Let's fix that by serving it through a home VPN!
 
-> :warning: **Update on 2021/03/11**: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now.
+> ⚠️ **Update on 2021/03/11**: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now.
 
 <!--more-->
 
