@@ -9,6 +9,8 @@ lang: es_CL
 
 Llevo varios años usando [Pi-hole](https://pi-hole.net/). Es una herramienta fantásica para mejorar tu experiencia en linea y proteger tu privacidad... excepto por un problema: no es portable... o normalmente no lo es. ¡Arreglemos eso con una VPN casera!
 
+> :warning: **Actualización, 2021/03/11**: En la guía original, me faltaron algunos pasos para configurar Dynamic DNS. Ahora sí debería estar completo.
+
 <!--more-->
 
 ## ¿Por qué querría hacer esto?
@@ -28,19 +30,32 @@ Para partir, vas a necesitar algunas cosas:
 * Una Raspberry Pi. Estoy usando una [RPi 4 modelo B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/), aunque creo que modelos más viejos también deberían servir.
 * Un nombre de dominio.
 * Un router que soporte port forwarding (creo que la mayoría puede, hoy en día).
-* Una cuenta en un hosting de DNS. Yo uso [Hurricane Electric](https://dns.he.net/). No dejes que la página anticuada te engañe... funciona bien, y es completamente gratis (al menos para lo que necesitamos en este proyecto).
+* Una cuenta en un hosting de DNS que soporte Dynamic DNS.
+  * Yo uso [Hurricane Electric](https://dns.he.net/). No dejes que la página anticuada te engañe... funciona bien, y es completamente gratis (al menos para lo que necesitamos en este proyecto).
 * La dirección IP pública de tu router.
 
 ## Primero: configurar tu dominio de WireGuard
 
 Cuando tengas tu dominio y te hayas registrado en un servicio de DNS, tienes que:
 1. Agregar tu dominio al servicio de DNS, siguiendo todas las instrucciones que te den. Cuando estés listo, deberías tener al menos los siguientes registros:
- * SOA (start of authority)
- * NS (nameserver)
+   * SOA (start of authority)
+   * NS (nameserver)
 2. Con esto listo, agrega un registro A (mapping de dominio a dirección IP) con esta configuración:
- * Nombre: tu dominio... o un subdominio, si quieres usar el dominio principal para otra cosas
- * Dirección IP: tu dirección IP pública
- * TTL: no más de 300 (5 minutos)
+   * Nombre: tu dominio... o un subdominio, si quieres usar el dominio principal para otra cosas
+   * Dirección IP: tu dirección IP pública
+   * TTL: no más de 300 (5 minutos)
+   * Dynamic DNS habilitado. Esto va a permitir que tu VPN funcione incluso si tu dirección IP pública cambia.
+3. Crea una contraseña para tu registro de Dynamic DNS, y anótala. La necesitamos para que tu Raspberry Pi o router pueda actualizar el registro A.
+4. Configura las actualizaciones de Dynamic DNS:
+   * Si quieres hacer esto desde tu Raspberry Pi, puedes usar `ddclient`.
+   * Yo lo hice desde mi router (que probablemente también usa `ddclient` por debajo).
+   * Para Hurricane Electric, ésta es la configuración que usé:
+     * Proveedor: custom
+     * Servidor de Dynamic DNS: `dyn.dns.he.net`
+     * Request: `/nic/update`
+     * Dominio: tu dominio o subdominio
+     * Usuario: tu dominio o subdominio
+     * Contraseña: la que creaste en el paso `3.`
 
 Esto te va a permitir conectarte a tu router remotamente. **¡Asegúrate de desactivar el acceso a la UI de tu router desde la WAN!**
 
@@ -52,13 +67,13 @@ Esto te va a permitir conectarte a tu router remotamente. **¡Asegúrate de desa
 1. [Instala tu sistema operativo](https://www.raspberrypi.org/documentation/installation/installing-images/). Te recomiendo que [habilites SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/) para seguir la instalación.
 2. Conéctate a tu Raspberry Pi via SSH.
 3. En la configuración de DHCP de tu router, dale una dirección IP estática a tu Raspberry Pi. Anótala.
- * Reinicia la Raspberry Pi (o al menos su servicio de redes) para aplicar la nueva IP.
+   * Reinicia la Raspberry Pi (o al menos su servicio de redes) para aplicar la nueva IP.
 4. [Instala Pi-hole](https://github.com/pi-hole/pi-hole/#one-step-automated-install).
- * Te recomiendo la instalación automatizada: `curl -sSL https://install.pi-hole.net | bash`
- * Durante la instalación, vas a poder escoger tus DNS de respaldo. Algunas de las opciones que te dan no son buenas para la privacidad, así que ten cuidado.
- * Durante la instalación, te van a ofrecer configurar la dirección IP actual como estática. Hazlo.
+   * Te recomiendo la instalación automatizada: `curl -sSL https://install.pi-hole.net | bash`
+   * Durante la instalación, vas a poder escoger tus DNS de respaldo. Algunas de las opciones que te dan no son buenas para la privacidad, así que ten cuidado.
+   * Durante la instalación, te van a ofrecer configurar la dirección IP actual como estática. Hazlo.
 5. Cuando hayas confirmado que tu Pi-hole está funcionando (prueba abriendo el dashboard en http://pi.hole/admin), configura tu router para que use tu Raspberry Pi como su *único* servidor de DNS.
- * Si quieres, puedes agregar un DNS secundario por si tu Raspberry Pi falla.
+   * Si quieres, puedes agregar un DNS secundario por si tu Raspberry Pi falla.
 
 Listo, ahora los dispositivos en tu red casera pueden usar Pi-hole para bloquear publicidad.
 
@@ -66,11 +81,11 @@ Listo, ahora los dispositivos en tu red casera pueden usar Pi-hole para bloquear
 
 Por supuesto que esto no se puede usar remotamente, así que tenemos que instalar WireGuard:
 1. [Instala PiVPN](https://www.pivpn.io/)
- * PiVPN también tiene un instalador: `curl -L https://install.pivpn.io | bash`
- * Durante la instalación, escoge WireGuard como tu protocolo de VPN. Puedes usar cualquier puerto, pero toma nota para después.
- * Cuando el instalador te pida que escojas entre una IP pública y un DNS público, escoge el DNS. En la pantalla siguiene, escribe el nombre del (sub)dominio que configuraste antes.
- * El instalador debería detectar automáticamente tu instalación de Pi-hole, y preguntarte si quieres usarla en tu VPN. ¡Acepta!
-2. En tu router, habilita port forwarding para el puerto que escogiste.
+   * PiVPN también tiene un instalador: `curl -L https://install.pivpn.io | bash`
+   * Durante la instalación, escoge WireGuard como tu protocolo de VPN. Puedes usar cualquier puerto, pero toma nota para después.
+   * Cuando el instalador te pida que escojas entre una IP pública y un DNS público, escoge el DNS. En la pantalla siguiene, escribe el nombre del (sub)dominio que configuraste antes.
+   * El instalador debería detectar automáticamente tu instalación de Pi-hole, y preguntarte si quieres usarla en tu VPN. ¡Acepta!
+2. En tu router, habilita port forwarding hacia tu Raspberry Pi para el puerto de WireGuard. Por defecto, es `51820`.
 
 ¡Y eso es todo! Ahora sólo tienes que probar tu configuración de WireGuard. Puedes usar tu smartphone:
 1. En tu Raspberry Pi, crea un nuevo perfil de usuario con el comando `pivpn -a`.
@@ -93,3 +108,15 @@ Ambas funcionan bien, pero tienen sus desventajas:
 * En el caso de la VPN, estás confiando que el proveedor no va a registrar, compartir o vender tu actividad. Esto es un riesgo que yo no estaba dispuesto a tomar.
 
 No importa qué opción escojas, la internet cambia drásticamente cuando eliminas la mayoría del ruido. ¡Disfruta!
+
+## Problemas comunes
+
+Éstos son algunos de los problemas que he tenido al re-configurar my VPN de WireGuard:
+
+* Asegúrate que tu Dynamic DNS esté actualizándose correctamente. Esto podría ser por una contraseña incorrecta o por la configuración de Dynamic DNS.
+* Asegúrate que el port forwarding esté configurado correctamente. No tienes idea de cuántas veces usé el puerto equivocado.
+* Si no puedes acceder a los dispositivos de tu red remotamente, prueba lo siguiente:
+  1. Abre tu cliente de WireGuard en tu dispositivo.
+  2. Edita el túnel de WireGuard.
+  3. En "IPs Permitidas", agrega el rango de IPs que corresponda a la red de tu casa. Algunos valores típicos son `192.168.0.0/24` y `192.168.1.0/24`.
+  4. Guarda los cambios e intenta de nuevo.
