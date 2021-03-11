@@ -9,7 +9,7 @@ lang: es_CL
 
 Llevo varios años usando [Pi-hole](https://pi-hole.net/). Es una herramienta fantásica para mejorar tu experiencia en linea y proteger tu privacidad... excepto por un problema: no es portable... o normalmente no lo es. ¡Arreglemos eso con una VPN casera!
 
-> :warning: **Actualización, 2021/03/11**: En la guía original, me faltaron algunos pasos para configurar Dynamic DNS. Ahora sí debería estar completo.
+> ⚠️ **Actualización, 2021/03/11**: En la guía original, me faltaron algunos pasos para configurar Dynamic DNS. Ahora sí debería estar completo.
 
 <!--more-->
 
