@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to take your Pi-hole anywhere using WireGuard | The Blogzzolo</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to take your Pi-hole anywhere using WireGuard" />
+<meta name="author" content="Rodrigo Bozzolo (a.k.a. The Bozz)" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="I’ve been using Pi-hole for several years. It’s just a fantastic way to both improve your online experience and protect your privacy… but it has one problem: you can’t bring it everywhere with you. Let’s fix that by serving it through a home VPN! ⚠️ Update on 2021/03/11: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now." />
+<meta property="og:description" content="I’ve been using Pi-hole for several years. It’s just a fantastic way to both improve your online experience and protect your privacy… but it has one problem: you can’t bring it everywhere with you. Let’s fix that by serving it through a home VPN! ⚠️ Update on 2021/03/11: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now." />
+<link rel="canonical" href="https://bozz.cl/posts/2020-05-19-pihole-wireguard.html" />
+<meta property="og:url" content="https://bozz.cl/posts/2020-05-19-pihole-wireguard.html" />
+<meta property="og:site_name" content="The Blogzzolo" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-20T03:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to take your Pi-hole anywhere using WireGuard" />
+<script type="application/ld+json">
+{"description":"I’ve been using Pi-hole for several years. It’s just a fantastic way to both improve your online experience and protect your privacy… but it has one problem: you can’t bring it everywhere with you. Let’s fix that by serving it through a home VPN! ⚠️ Update on 2021/03/11: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now.","headline":"How to take your Pi-hole anywhere using WireGuard","dateModified":"2020-05-20T03:00:00+00:00","datePublished":"2020-05-20T03:00:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bozz.cl/posts/2020-05-19-pihole-wireguard.html"},"url":"https://bozz.cl/posts/2020-05-19-pihole-wireguard.html","author":{"@type":"Person","name":"Rodrigo Bozzolo (a.k.a. The Bozz)"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bozz.cl/feed.xml" title="The Blogzzolo" />
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The Blogzzolo</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            
+              <a class="page-link" href=" /posts/2020-05-19-pihole-wireguard.html">
+            
+              🇺🇸 English 
+            </a>
+          
+            
+            
+            
+              <a class="page-link" href="https://bozz.cl/es_CL/posts/2020-05-19-pihole-wireguard.html">
+            
+              🇨🇱 Spanish 
+            </a>
+          <a class="page-link" href="/about/">About me</a><a class="page-link" href="/credits/">Credits</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How to take your Pi-hole anywhere using WireGuard</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-05-20T03:00:00+00:00" itemprop="datePublished">May 20, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I’ve been using <a href="https://pi-hole.net/">Pi-hole</a> for several years. It’s just a fantastic way to both improve your online experience and protect your privacy… but it has one problem: you can’t bring it everywhere with you. Let’s fix that by serving it through a home VPN!</p>
+
+<blockquote>
+  <p>⚠️ <strong>Update on 2021/03/11</strong>: I missed some steps regarding Dynamic DNS during the original write-up. The article should be complete now.</p>
+</blockquote>
+
+<!--more-->
+
+<h2 id="why-would-you-want-to-do-this">Why would you want to do this?</h2>
+
+<p>My main motivation is ad blocking. Anybody who knows me will be able to tell you this: I hate ads and activity trackers with a passion. I go out of my way to remove them from my life. Being able to use my Pi-hole from anywhere I want is a huge boon.</p>
+
+<p>There’s other reasons you could want something like this:</p>
+<ul>
+  <li>Access your home network remotely</li>
+  <li>Give your friends secure access to a home server</li>
+  <li>Protect your privacy on untrusted networks</li>
+</ul>
+
+<p>It’s very easy to do and can be done on the cheap.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>You’re going to need a few things:</p>
+<ul>
+  <li>A Raspberry Pi. I use a <a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">RPi 4 model B</a>, but I think older models should work as well.</li>
+  <li>A domain name.</li>
+  <li>A router that supports port forwarding (most do, as far as I know).</li>
+  <li>An account in a DNS hosting service that supports Dynamic DNS.
+    <ul>
+      <li>I use <a href="https://dns.he.net/">Hurricane Electric</a>. Don’t let the spartan web site fool you… it performs well, it’s got enough features and it’s completely free! (At least for the scope of this project)</li>
+    </ul>
+  </li>
+  <li>Your router’s public IP address.</li>
+</ul>
+
+<h2 id="first-part-set-up-your-wireguard-domain">First part: set up your WireGuard domain</h2>
+
+<p>Once you’ve bought your domain and registered on a DNS service, you need to:</p>
+<ol>
+  <li>Add your domain to the DNS service, following any instructions they give you. You should have at least the following records:
+    <ul>
+      <li>SOA (start of authority)</li>
+      <li>NS (nameserver)</li>
+    </ul>
+  </li>
+  <li>Once you have these ready, add an A (domain-to-IP mapping) record with the following settings:
+    <ul>
+      <li>Name: your domain name (or a subdomain, if you want to use the domain name for something else)</li>
+      <li>IP address: your public IP address</li>
+      <li>TTL: no more than 300 (5 minutes)</li>
+      <li>Dynamic DNS enabled. This will ensure your VPN works even if your public IP address changes.</li>
+    </ul>
+  </li>
+  <li>Create a Dynamic DNS password for your A record and write it down. This is required so your Raspberry Pi or router can update the A record.</li>
+  <li>Set up Dynamic DNS updates:
+    <ul>
+      <li>If you want to do them through your Raspberry Pi, you can use <code class="language-plaintext highlighter-rouge">ddclient</code>.</li>
+      <li>I just used my router’s Dynamic DNS settings (which probably uses <code class="language-plaintext highlighter-rouge">ddclient</code> anyway).</li>
+      <li>For Hurricane Electric, these are the settings I used:
+        <ul>
+          <li>Provider: custom</li>
+          <li>Dynamic DNS server: <code class="language-plaintext highlighter-rouge">dyn.dns.he.net</code></li>
+          <li>Request: <code class="language-plaintext highlighter-rouge">/nic/update</code></li>
+          <li>Domain: your domain or subdomain name</li>
+          <li>Username: your domain or subdomain name</li>
+          <li>Password: the Dynamic DNS password you created in step <code class="language-plaintext highlighter-rouge">3.</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>This will allow you to connect to your router remotely. <strong>Make sure to disable WAN access to your router’s admin UI!</strong></p>
+
+<h2 id="next-set-up-pi-hole">Next: set up Pi-hole</h2>
+
+<p><strong>NOTE</strong>: most of these instructions link to the manufacturer or software’s websites. If any links break let me know and I’ll do my best to fix them.</p>
+
+<p>So you got your Raspberry Pi out of the box and ready to go? Setting up Pi-hole and WireGuard on it is very easy:</p>
+<ol>
+  <li><a href="https://www.raspberrypi.org/documentation/installation/installing-images/">Install your OS of choice</a>. While you’re doing this, I recommend you <a href="https://www.raspberrypi.org/documentation/remote-access/ssh/">enable SSH</a>.</li>
+  <li>SSH into your Raspberry Pi.</li>
+  <li>Give your Raspberry Pi a static LAN IP in your router’s DHCP settings, then write it down
+    <ul>
+      <li>Reboot your Raspberry Pi (or its networking service) to apply the new IP address</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/pi-hole/pi-hole/#one-step-automated-install">Install Pi-hole</a>.
+    <ul>
+      <li>I recommend the automated install to keep things easy: <code class="language-plaintext highlighter-rouge">curl -sSL https://install.pi-hole.net | bash</code></li>
+      <li>The install tool will let you choose your upstream DNS providers. Some of the options it gives you are not privacy-friendly, so choose carefully.</li>
+      <li>During installation, the tool will allow you to choose to set your Pi’s current local IP address as static. Do choose this option. Make sure you allocate this IP on your router as well!</li>
+    </ul>
+  </li>
+  <li>Once you’ve confirmed your Pi-hole installation is working (check the dashboard available at http://pi.hole/admin/), set your router to use the Raspberry Pi as your <em>only</em> DNS server.
+    <ul>
+      <li>If you want redundancy in case your Pi breaks, you could add a secondary DNS server.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Done! Now any devices on your home network should be able to use your Raspberry Pi to resolve URLs and block ad or tracking domains.</p>
+
+<h2 id="finally-setting-up-wireguard">Finally: setting up WireGuard</h2>
+
+<p>Of course, this is still not usable remotely, so we need to install WireGuard:</p>
+<ol>
+  <li><a href="https://www.pivpn.io/">Install PiVPN</a>
+    <ul>
+      <li>This one also has an automated installer: <code class="language-plaintext highlighter-rouge">curl -L https://install.pivpn.io | bash</code></li>
+      <li>During installation, choose WireGuard as your VPN protocol. Choose whatever port you want, as long as you write it down.</li>
+      <li>When the installer asks you to choose between using a public IP and using a public DNS, choose the DNS. In the next screen, write the (sub)domain you set up earlier.</li>
+      <li>The installer should detect your Pi-hole installation and ask if it should use it. Accept it!</li>
+    </ul>
+  </li>
+  <li>In your router’s settings, enable port forwarding to your Raspberry Pi for the WireGuard port. By default, this is <code class="language-plaintext highlighter-rouge">51820</code>.</li>
+</ol>
+
+<p>And that’s it! Now you need to test your new VPN. I recommend using your phone:</p>
+<ol>
+  <li>In the Raspberry Pi, set up a user profile by running <code class="language-plaintext highlighter-rouge">pivpn -a</code>.</li>
+  <li>Once it’s ready, you can use that profile in other devices by:
+    <ul>
+      <li>Copying the generated config file over to your device.</li>
+      <li><strong>Recommended</strong>: using a QR code generated by the <code class="language-plaintext highlighter-rouge">pivpn -qr</code> command. We’re gonna use this one, which should draw a QR code in your terminal.</li>
+    </ul>
+  </li>
+  <li>Whip out your phone and install the WireGuard client:
+    <ul>
+      <li><a href="https://play.google.com/store/apps/details?id=com.wireguard.android&amp;hl=en_US">Android</a></li>
+      <li><a href="https://apps.apple.com/us/app/wireguard/id1441195209">iOS</a></li>
+    </ul>
+  </li>
+  <li>Open the app, and set up a new tunnel. If you followed my advice and used the QR code, you should be able to just point your phone camera at it and the app will do the rest.</li>
+</ol>
+
+<p>Time to test it out! Disconnect your phone from your WiFi, then try to open http://pi.hole/ again. If you did it right, it should open just like that. If that worked, congratulations!</p>
+
+<h2 id="what-if-i-dont-want-to-do-all-of-this">What if I don’t want to do all of this?</h2>
+
+<p>…I mean, I think every step of this tutorial is easy to follow, but that’s fair. There’s VPN services that offer ad-blocking DNS as part of the bundle, like <a href="https://windscribe.com/">Windscribe</a>. Or you can use a local VPN solution like <a href="https://f-droid.org/en/packages/org.jak_linux.dns66/">DNS66</a>. There’s others, these two are just the ones I’ve tried in the past and liked.</p>
+
+<p>Both options work very well, but they have their shortcomings:</p>
+<ul>
+  <li>They only work on a limited number of devices at a time (you could set up the VPN in your router, but it will slow down your connection).</li>
+  <li>In the case of the VPN, you’re trusting the provider not record, share or sell your browsing habits. That’s a risk I wasn’t willing to take.</li>
+</ul>
+
+<p>Whichever option you choose, the internet really changes for the best once you remove most of the noise. Enjoy!</p>
+
+<h2 id="common-troubleshooting-steps">Common troubleshooting steps</h2>
+
+<p>These are some of the issues I’ve run when re-configuring my WireGuard VPN:</p>
+
+<ul>
+  <li>Make sure your Dynamic DNS is updating properly. This could be either a wrong password or Dynamic DNS settings.</li>
+  <li>Make sure your port forwarding is set up correctly. You have no idea how many times I got the port wrong.</li>
+  <li>If you’re having trouble accessing devices on your home network remotely, try the following:
+    <ol>
+      <li>Open the WireGuard client in your device.</li>
+      <li>Edit the WireGuard tunnel.</li>
+      <li>On “Allowed IPs”, add a IP range that matches your home network. Some typical values are <code class="language-plaintext highlighter-rouge">192.168.0.0/24</code> and <code class="language-plaintext highlighter-rouge">192.168.1.0/24</code>.</li>
+      <li>Save and try again.</li>
+    </ol>
+  </li>
+</ul>
+
+  </div><script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
+<div id="fastcomments-widget"></div>
+<script>
+  window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
+    tenantId: "IeX0qIpHi",
+    urlId: "https://bozz.cl/posts/2020-05-19-pihole-wireguard.html",
+    locale: "en_us",
+  });
+</script>
+<a class="u-url" href="/posts/2020-05-19-pihole-wireguard.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The Blogzzolo</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Rodrigo Bozzolo (a.k.a. The Bozz)</li><li><a class="u-email" href="mailto:contact@bozz.cl">contact@bozz.cl</a></li><p class="rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a></p>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jekyll" title="jekyll"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/jekyllrb" title="jekyllrb"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Personal and project blog</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

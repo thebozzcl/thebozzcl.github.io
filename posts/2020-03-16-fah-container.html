@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Running Folding@Home on Linux with CUDA support using Docker | The Blogzzolo</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Running Folding@Home on Linux with CUDA support using Docker" />
+<meta name="author" content="Rodrigo Bozzolo (a.k.a. The Bozz)" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Global outbreaks have a way to make you feel powerless. Sitting at home, waiting for the coronavirus to blow over… is there really nothing else you can do? Well, there are ways in which you can help. One such example is Folding@Home. F@H is an initiative that uses your computer’s resources to help simulate how proteins and other complex chemicals work. They have set up high-priority jobs to analyze the 2019-nCoV virus, in hopes to help find antibody targets. If you want to help, it’s as easy as downloading and running their program. Well… except for the life of me I couldn’t get it to run in Ubuntu. So I decided to find a way to do so." />
+<meta property="og:description" content="Global outbreaks have a way to make you feel powerless. Sitting at home, waiting for the coronavirus to blow over… is there really nothing else you can do? Well, there are ways in which you can help. One such example is Folding@Home. F@H is an initiative that uses your computer’s resources to help simulate how proteins and other complex chemicals work. They have set up high-priority jobs to analyze the 2019-nCoV virus, in hopes to help find antibody targets. If you want to help, it’s as easy as downloading and running their program. Well… except for the life of me I couldn’t get it to run in Ubuntu. So I decided to find a way to do so." />
+<link rel="canonical" href="https://bozz.cl/posts/2020-03-16-fah-container.html" />
+<meta property="og:url" content="https://bozz.cl/posts/2020-03-16-fah-container.html" />
+<meta property="og:site_name" content="The Blogzzolo" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-17T04:20:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Running Folding@Home on Linux with CUDA support using Docker" />
+<script type="application/ld+json">
+{"description":"Global outbreaks have a way to make you feel powerless. Sitting at home, waiting for the coronavirus to blow over… is there really nothing else you can do? Well, there are ways in which you can help. One such example is Folding@Home. F@H is an initiative that uses your computer’s resources to help simulate how proteins and other complex chemicals work. They have set up high-priority jobs to analyze the 2019-nCoV virus, in hopes to help find antibody targets. If you want to help, it’s as easy as downloading and running their program. Well… except for the life of me I couldn’t get it to run in Ubuntu. So I decided to find a way to do so.","headline":"Running Folding@Home on Linux with CUDA support using Docker","dateModified":"2020-03-17T04:20:00+00:00","datePublished":"2020-03-17T04:20:00+00:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://bozz.cl/posts/2020-03-16-fah-container.html"},"url":"https://bozz.cl/posts/2020-03-16-fah-container.html","author":{"@type":"Person","name":"Rodrigo Bozzolo (a.k.a. The Bozz)"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bozz.cl/feed.xml" title="The Blogzzolo" />
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The Blogzzolo</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            
+              <a class="page-link" href=" /posts/2020-03-16-fah-container.html">
+            
+              🇺🇸 English 
+            </a>
+          
+            
+            
+            
+              <a class="page-link" href="https://bozz.cl/es_CL/posts/2020-03-16-fah-container.html">
+            
+              🇨🇱 Spanish 
+            </a>
+          <a class="page-link" href="/about/">About me</a><a class="page-link" href="/credits/">Credits</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Running Folding@Home on Linux with CUDA support using Docker</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-03-17T04:20:00+00:00" itemprop="datePublished">Mar 17, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Global outbreaks have a way to make you feel powerless. Sitting at home, waiting for the coronavirus to blow over… is there really nothing else you can do? Well, there are ways in which you can help. One such example is <a href="https://foldingathome.org/">Folding@Home</a>. F@H is an initiative that uses your computer’s resources to help simulate how proteins and other complex chemicals work. They have set up <a href="https://foldingathome.org/2020/02/27/foldinghome-takes-up-the-fight-against-covid-19-2019-ncov/">high-priority jobs to analyze the 2019-nCoV virus</a>, in hopes to help find antibody targets.</p>
+
+<p>If you want to help, it’s as easy as <a href="https://foldingathome.org/start-folding/">downloading and running their program</a>. Well… except for the life of me I couldn’t get it to run in Ubuntu. So I decided to find a way to do so.</p>
+
+<!--more-->
+
+<h2 id="so-what-was-the-problem">So what was the problem?</h2>
+
+<p>I run <a href="https://system76.com/pop">Pop!_OS 19.10</a>, which is a Linux distro based on Ubuntu. When I tried to install the F@H packages, <code class="language-plaintext highlighter-rouge">apt</code> told me it can’t find <code class="language-plaintext highlighter-rouge">python-gnome2</code> and some other related dependencies. Apparently, that library is not available from Ubuntu 19.04 onward.</p>
+
+<h2 id="first-attempt-force-install-all-the-dependencies">First attempt: force-install all the dependencies</h2>
+
+<p>I found some guides online that try to download and install all the missing dependencies. It’s very brute-force-ish: you have to download all the DEB installers yourself, then try to install them and fix dependency issues.</p>
+
+<p>Unsurprisingly, this didn’t work. Failed installations, file conflicts… too many issues I didn’t care to solve.</p>
+
+<h2 id="second-attempt-using-a-docker-container">Second attempt: using a Docker container</h2>
+
+<p>I talked to some friends in social media about my problem, and somebody came up with the stroke of genius I was missing: use a Docker container! Pre-built containers package all needed dependencies, and there’s a good chance somebody has already done so.</p>
+
+<p>Indeed, <a href="https://hub.docker.com/search?q=folding-at-home&amp;type=image">there were a few options</a>. I chose <a href="https://hub.docker.com/r/yurinnick/folding-at-home">yurinnick’s</a> since it was updated recently. This container is lightweight and simple, which are two great pluses.</p>
+
+<p>Unfortunately, something else was missing. While the container ran almost immediately with no fuss, it couldn’t detect my graphics card and that also meant no support for CUDA or OpenCL. This is important because GPUs are generally better at massively parallel operations, which is very useful for work loads like analyzing data and folding proteins.</p>
+
+<h2 id="third-attempt-fixing-cuda-and-opencl-support-in-the-container">Third attempt: fixing CUDA and OpenCL support in the container</h2>
+
+<p>Luckily for me, my time working as a developer in AWS SageMaker taught me a few things about Docker and working with nVidia containers. Not a lot, to be honest, but good enough to figure out the issue on my own.</p>
+
+<p>Here’s how I fixed it:</p>
+<ol>
+  <li>Update your system’s GPU drivers.</li>
+  <li>Optional, but potentially useful for debugging: install <a href="https://developer.nvidia.com/cuda-downloads">nVidia’s CUDA toolkit</a>. If successful, you should be able to see your current CUDA version when running <code class="language-plaintext highlighter-rouge">nvidia-smi</code>.</li>
+  <li>Install the <a href="https://github.com/NVIDIA/nvidia-docker">nVidia Container Toolkit</a>. This is crucial because it allows your containers to access your graphics card. You can confirm it worked by running <code class="language-plaintext highlighter-rouge">docker run --gpus all nvidia/cuda:10.0-base nvidia-smi</code>. If you see the same results as above, it means everything is in order.</li>
+  <li>Finally, I forked <a href="https://github.com/yurinnick/folding-at-home-docker/">yurinnick’s repository</a> and changed the <code class="language-plaintext highlighter-rouge">Dockerfile</code> to be based on <code class="language-plaintext highlighter-rouge">nvidia/opencl</code>, which includes all the necessary libraries to allow F@H to use it. My final resulting image is currently <a href="https://hub.docker.com/r/thebozzcl/folding-at-home">published to Docker Hub and publicly available</a>.</li>
+</ol>
+
+<p>After doing the prep steps above and fixing the container image, I was able to run GPU workloads in the container using the following run command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --gpus all \
+  --name folding-at-home \
+  -p 7396:7396 \
+  -p 36330:36330 \
+  -e USER=Anonymous \
+  -e TEAM=0 \
+  -e ENABLE_GPU=true \
+  -e ENABLE_SMP=true \
+  --restart unless-stopped \
+  thebozzcl/folding-at-home \
+  --allow 0/0 \
+  --web-allow 0/0
+</code></pre></div></div>
+
+<h2 id="running-the-container-in-other-os-and-hardware-configurations">Running the container in other OS and hardware configurations</h2>
+
+<p>I haven’t done a lot of testing, other than in my own machine, so there’s not a lot I can say. There’s a few things that are pretty certain:</p>
+<ul>
+  <li>This should work without much trouble in other machines with nVidia GPUs, as long as you set up the Container Toolkit and keep your drivers up-to-date.</li>
+  <li>This should also work in machines without a dedicated GPU, but you should use a lighter image instead.</li>
+  <li>I have no idea if this will run with an AMD GPU. I don’t know what the process to get them to work looks like… but if you manage to do so, let me know!</li>
+</ul>
+
+<h2 id="future-steps-and-pending-work-well-not-really">Future steps and pending work… well, not really</h2>
+
+<p>I’m afraid I don’t want to sustain this container long-term. I’d be willing to fix small emergent issues should they appear and review merge requests, but I have plenty of work in my plate as it is and I don’t want to commit long-term to this.</p>
+
+<p>In any case, this container code is dead simple and mostly not mine… so feel free to fork my repo and update the container to your liking!</p>
+
+  </div><script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
+<div id="fastcomments-widget"></div>
+<script>
+  window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
+    tenantId: "IeX0qIpHi",
+    urlId: "https://bozz.cl/posts/2020-03-16-fah-container.html",
+    locale: "en_us",
+  });
+</script>
+<a class="u-url" href="/posts/2020-03-16-fah-container.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The Blogzzolo</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Rodrigo Bozzolo (a.k.a. The Bozz)</li><li><a class="u-email" href="mailto:contact@bozz.cl">contact@bozz.cl</a></li><p class="rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a></p>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jekyll" title="jekyll"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/jekyllrb" title="jekyllrb"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Personal and project blog</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
